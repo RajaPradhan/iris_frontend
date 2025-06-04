@@ -1,0 +1,24 @@
+[project]
+name = "iris-frontend"
+version = "0.1.0"
+description = "Frontend for the IRIS project"
+authors = [
+    {name = "rajapradhan",email = "rajapradhan08@gmail.com"}
+]
+readme = "README.md"
+requires-python = "3.12.9"
+dependencies = [
+    "streamlit (>=1.45.1,<2.0.0)",
+    "requests (>=2.32.3,<3.0.0)",
+    "python-dotenv (>=1.1.0,<2.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.dev.dependencies]
+black = "^25.1.0"
+isort = "^6.0.1"
+ruff = "^0.11.12"
