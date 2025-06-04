@@ -274,6 +274,15 @@ if not st.session_state.show_chat:
             f"Sure! Here's IRIS's answer to: **{user_input}**  \n\n"
             "This is a placeholder, but the typing effect is much smoother now!"
         )
+        
+        # # Make the API call
+        # try:
+        #     response = requests.post("http://your-api-url.com/answer", json={"question": user_input})
+        #     response.raise_for_status()
+        #     data = response.json()
+        #     full_response = data.get("answer", "Sorry, I couldn't find an answer.")
+        # except Exception as e:
+        #     full_response = f"API call failed: {e}"
 
         # Show "IRIS is thinking..." first
         with response_container:
