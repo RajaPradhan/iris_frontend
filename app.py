@@ -261,6 +261,43 @@ div[data-testid="stSelectbox"] > div > div {
     to { opacity: 1; }
 }
 
+/* Character shine animation */
+@keyframes characterShine {
+    0% { opacity: 0.3; }
+    50% { opacity: 1; }
+    100% { opacity: 0.3; }
+}
+
+.thinking-text {
+    display: inline-flex;
+    gap: 1px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.thinking-text span {
+    display: inline-block;
+    animation: characterShine 1.5s ease-in-out infinite;
+}
+
+.thinking-text span:nth-child(1) { animation-delay: 0.0s; }
+.thinking-text span:nth-child(2) { animation-delay: 0.1s; }
+.thinking-text span:nth-child(3) { animation-delay: 0.2s; }
+.thinking-text span:nth-child(4) { animation-delay: 0.3s; }
+.thinking-text span:nth-child(5) { animation-delay: 0.4s; }
+.thinking-text span:nth-child(6) { animation-delay: 0.5s; }
+.thinking-text span:nth-child(7) { animation-delay: 0.6s; }
+.thinking-text span:nth-child(8) { animation-delay: 0.7s; }
+.thinking-text span:nth-child(9) { animation-delay: 0.8s; }
+.thinking-text span:nth-child(10) { animation-delay: 0.9s; }
+.thinking-text span:nth-child(11) { animation-delay: 1.0s; }
+.thinking-text span:nth-child(12) { animation-delay: 1.1s; }
+.thinking-text span:nth-child(13) { animation-delay: 1.2s; }
+.thinking-text span:nth-child(14) { animation-delay: 1.3s; }
+.thinking-text span:nth-child(15) { animation-delay: 1.4s; }
+.thinking-text span:nth-child(16) { animation-delay: 1.5s; }
+.thinking-text span:nth-child(17) { animation-delay: 1.6s; }
+.thinking-text span:nth-child(18) { animation-delay: 1.7s; }
+
 /* Blinking dots animation */
 @keyframes blink {
     0% { opacity: 0.2; }
@@ -387,13 +424,19 @@ if prompt := st.chat_input("Ask me anything..."):
         try:
             response_container = st.empty()
 
-            # Show initial thinking message with blinking dots
-            response_container.markdown('🤔 IRIS is thinking<span class="thinking-dots"><span>.</span><span>.</span><span>.</span></span>', unsafe_allow_html=True)
+            # Split the text into individual characters for the shine animation
+            thinking_text = "🤔 IRIS is thinking"
+            animated_text = '<div class="thinking-text">' + ''.join([f'<span>{char}</span>' for char in thinking_text]) + '</div>'
+
+            # Show initial thinking message with character shine animation
+            response_container.markdown(
+                f'{animated_text}<span class="thinking-dots"><span>.</span><span>.</span><span>.</span></span>',
+                unsafe_allow_html=True
+            )
 
             # Stream the response with user role
             final_response = ""
-            current_role = st.session_state.current_role  # Capture current role
-            app_logger.info(f"Sending request with role: {current_role}")  # Add logging for debugging
+            current_role = st.session_state.current_role
 
             for response_text in stream_response(prompt, user_role=current_role):
                 response_container.markdown(response_text)
