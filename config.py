@@ -12,7 +12,7 @@ if os.path.exists(".env"):
 
 # API Settings
 API_URL = os.getenv("API_URL", "http://localhost:8000")
-API_BASE_PATH = os.getenv("API_BASE_PATH", "/api")
+API_BASE_PATH = os.getenv("API_BASE_PATH", "rag")
 
 # App Settings
 APP_TITLE = os.getenv("APP_TITLE", "AI Knowledge Assistant")
@@ -20,7 +20,7 @@ APP_ICON = os.getenv("APP_ICON", "🤖")
 APP_LAYOUT = os.getenv("APP_LAYOUT", "wide")
 
 # Logging Settings
-LOG_LEVEL = os.getenv("LOG_LEVEL", "INFO").upper()
+LOG_LEVEL = os.getenv("LOG_LEVEL", "DEBUG").upper()
 CONSOLE_LOGGING = os.getenv("CONSOLE_LOGGING", "true").lower() == "true"
 FILE_LOGGING = os.getenv("FILE_LOGGING", "true").lower() == "true"
 

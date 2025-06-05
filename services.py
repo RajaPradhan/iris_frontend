@@ -17,12 +17,13 @@ class ChatService:
     """Service for handling chat-related API interactions."""
 
     @staticmethod
-    def send_message(question: str) -> Generator[str, None, None]:
+    def send_message(question: str, user_role: str = "admin") -> Generator[str, None, None]:
         """
         Send a message to the chat API and yield streaming responses.
 
         Args:
             question: The user's question
+            user_role: The role of the user making the request (default: "admin")
 
         Yields:
             Text chunks from the response
@@ -31,8 +32,6 @@ class ChatService:
             APIError: If there's an error communicating with the API
         """
         endpoint = get_chat_endpoint()
-        api_logger.info(f"Sending request to {endpoint}")
-        api_logger.info(f"Question: {question}")
 
         try:
             start_time = datetime.now()
@@ -40,7 +39,7 @@ class ChatService:
             # Make streaming request
             with requests.post(
                 endpoint,
-                json={"question": question},
+                json={"question": question, "user_role": user_role},
                 stream=True,
                 timeout=30
             ) as response:
@@ -55,7 +54,6 @@ class ChatService:
                             chunk = json.loads(line.decode('utf-8'))
                             if 'content' in chunk:
                                 content = chunk['content']
-                                api_logger.debug(f"Received chunk: {content}")
                                 yield content
 
                         except json.JSONDecodeError as e:
@@ -64,7 +62,7 @@ class ChatService:
 
             # Log completion
             response_time = (datetime.now() - start_time).total_seconds()
-            api_logger.info(f"Streaming completed in {response_time:.2f} seconds")
+            api_logger.info(f"Request completed in {response_time:.2f} seconds")
 
         except requests.exceptions.RequestException as e:
             error_msg = f"Failed to communicate with chat service: {str(e)}"
