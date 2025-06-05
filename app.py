@@ -181,6 +181,22 @@ div[data-testid="stSelectbox"] > div > div {
     from { opacity: 0; }
     to { opacity: 1; }
 }
+
+/* Blinking dots animation */
+@keyframes blink {
+    0% { opacity: 0.2; }
+    20% { opacity: 1; }
+    100% { opacity: 0.2; }
+}
+
+.thinking-dots span {
+    animation: blink 1.4s infinite;
+    display: inline-block;
+    margin: 0 1px;
+}
+
+.thinking-dots span:nth-child(2) { animation-delay: 0.2s; }
+.thinking-dots span:nth-child(3) { animation-delay: 0.4s; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -265,8 +281,8 @@ if prompt := st.chat_input("Ask me anything..."):
         try:
             response_container = st.empty()
 
-            # Show initial thinking message
-            response_container.markdown("🤔 IRIS is thinking...")
+            # Show initial thinking message with blinking dots
+            response_container.markdown('🤔 IRIS is thinking<span class="thinking-dots"><span>.</span><span>.</span><span>.</span></span>', unsafe_allow_html=True)
 
             # Stream the response
             final_response = ""
