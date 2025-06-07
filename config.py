@@ -12,7 +12,7 @@ if os.path.exists(".env"):
 
 # API Settings
 API_URL = os.getenv("API_URL", "http://localhost:8000")
-API_BASE_PATH = os.getenv("API_BASE_PATH", "rag")
+API_BASE_PATH = os.getenv("API_BASE_PATH", "api")
 
 # App Settings
 APP_TITLE = os.getenv("APP_TITLE", "AI Knowledge Assistant")
